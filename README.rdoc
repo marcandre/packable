@@ -1,3 +1,5 @@
+**Warning**: This library is not evolving anymore. I will accept well written PRs but will not resolve any issues as I have other priorities.
+
 = Packable Library - Intro
 
 If you need to do read and write binary data, there is of course <tt>Array::pack</tt> and <tt>String::unpack</tt>.
