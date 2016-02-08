@@ -1,4 +1,4 @@
-**Warning**: This library is not evolving anymore. I will accept well written PRs but will not resolve any issues as I have other priorities.
+*Note*: SciRuby are taking over maintenance for this library: https://github.com/SciRuby/packable
 
 = Packable Library - Intro
 
