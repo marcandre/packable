@@ -2,3 +2,5 @@
 .DS_Store
 coverage
 rdoc
+.bundle
+Gemfile.lock

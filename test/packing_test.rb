@@ -12,7 +12,7 @@ class XYZ
   end
 end
 
-class TestingPack < Test::Unit::TestCase
+class TestingPack < Minitest::Test
 
   context "Original form" do
     should "pack like before" do
@@ -48,7 +48,7 @@ class TestingPack < Test::Unit::TestCase
     assert_equal (1<<24)-1, -1.pack(:bytes => 3).unpack(Integer, :bytes => 3, :signed => false)
     assert_equal -1, -1.pack(:bytes => 3).unpack(Integer, :bytes => 3, :signed => true)
     assert_equal 42, 42.pack('L').unpack(Integer, :bytes => 4, :endian => :native)
-    assert_raise(ArgumentError){ 42.pack(:endian => "Geronimo")}
+    assert_raises(ArgumentError){ 42.pack(:endian => "Geronimo")}
   end
 
   def test_bignum
@@ -59,7 +59,7 @@ class TestingPack < Test::Unit::TestCase
   end
 
   def test_float
-    assert_raise(ArgumentError){ Math::PI.pack(:endian => "Geronimo")}
+    assert_raises(ArgumentError){ Math::PI.pack(:endian => "Geronimo")}
     assert_equal Math::PI, Math::PI.pack(:precision => :double, :endian => :native).unpack(Float, :precision => :double, :endian => :native)
     # Issue #1
     assert_equal Math::PI.pack(:precision => :double), Math::PI.pack('G')
@@ -77,16 +77,16 @@ class TestingPack < Test::Unit::TestCase
   end
 
   should "do basic type checking" do
-    assert_raise(TypeError) {"".unpack(42, :short)}
+    assert_raises(TypeError) {"".unpack(42, :short)}
   end
 
   context "Reading beyond the eof" do
     should "raises an EOFError when reading" do
       ["", "x"].each do |s|
         io = StringIO.new(s)
-        assert_raise(EOFError) {io.read(:double)}
-        assert_raise(EOFError) {io.read(:short)}
-        assert_raise(EOFError) {io.read(String, :bytes => 4)}
+        assert_raises(EOFError) {io.read(:double)}
+        assert_raises(EOFError) {io.read(:short)}
+        assert_raises(EOFError) {io.read(String, :bytes => 4)}
       end
     end
 
@@ -119,7 +119,7 @@ class TestingPack < Test::Unit::TestCase
 
       should "be accessible only from that class and descendants" do
         assert_equal "Hello", "World".pack(:specific_writer)
-        assert_raise RuntimeError do
+        assert_raises RuntimeError do
           6.pack(:specific_writer)
         end
       end
