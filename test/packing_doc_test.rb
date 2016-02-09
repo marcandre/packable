@@ -17,7 +17,7 @@ class MyHeader < Struct.new(:signature, :nb_blocks)
 end
 
 
-class PackableDocTest < Test::Unit::TestCase 
+class PackableDocTest < Minitest::Test 
   def test_doc
 
     assert_equal  [1,2,3], StringIO.new("\000\001\000\002\000\003").each(:short).to_a
