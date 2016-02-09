@@ -76,6 +76,12 @@ class TestingPack < Test::Unit::TestCase
     assert_equal "!", io.read
   end
 
+  def test_io_read_nil
+    # library was failing to call read_without_packing when invoked with nil.
+    io = StringIO.new("should read(nil)")
+    assert_equal "should read(nil)", io.read(nil)
+  end
+
   should "do basic type checking" do
     assert_raise(TypeError) {"".unpack(42, :short)}
   end
