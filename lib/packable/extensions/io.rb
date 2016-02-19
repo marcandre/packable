@@ -63,7 +63,7 @@ module Packable
       end
     
       def read_with_packing(*arg)
-        return read_without_packing(*arg) if (arg.length == 0) || arg.first.nil? || (arg.first.is_a?(Numeric) && (arg.length == 1))
+        return read_without_packing(*arg) if arg.length == 0 || arg.first.nil? || arg.first.is_a?(Numeric)
         values = Packable::Packers.to_class_option_list(*arg).map do |klass, options, original|
           if options[:read_packed]
             options[:read_packed].call(self)
