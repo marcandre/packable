@@ -82,6 +82,13 @@ class TestingPack < Minitest::Test
     assert_equal "should read(nil)", io.read(nil)
   end
 
+  def test_io_read_to_outbuf
+    # library was failing to call read_without_packing when invoked with fixnum and output buffer.
+    io = StringIO.new("should read(fixnum, buf)")
+    io.read(11, outbuf='')
+    assert_equal "should read", outbuf
+  end
+
   should "do basic type checking" do
     assert_raises(TypeError) {"".unpack(42, :short)}
   end
