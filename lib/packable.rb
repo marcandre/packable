@@ -1,5 +1,6 @@
 require "packable/version"
-require 'backports'
+require 'backports/tools/alias_method_chain'
+require 'backports/rails/module'
 require_relative 'packable/packers'
 require_relative 'packable/mixin'
 [Object, Array, String, Integer, Float, IO, Proc].each do |klass|
