@@ -48,7 +48,7 @@ Add GitHub to your gem sources (if you haven't already):
 Get the gem:
 
   sudo gem install marcandre-packable
-  
+
 That's it! Simply <tt>require 'packable'</tt> in your code to use it.
 
 == Compatibility
@@ -131,14 +131,14 @@ The following shortcuts and defaults are built-in the library:
   :byte           =>   :bytes=>1
   :unsigned_long  =>   :bytes=>4, :signed=>false
   :unsigned_short =>   :bytes=>2, :signed=>false
-                       
-=== Float              
+
+=== Float
   :merge_all      =>   :precision => :single, :endian => :big
   :default        =>   :float
   :double         =>   :precision => :double
   :float          =>   {}
-                       
-=== String             
+
+=== String
   :merge_all      =>   :fill => " "
 
 == Files and StringIO
@@ -180,7 +180,7 @@ and unpacking on +read_packed+. For example:
 
   class MyHeader < Struct.new(:signature, :nb_blocks)
     include Packable
-  
+
     def write_packed(packedio, options)
       packedio << [signature, {:bytes=>3}] << [nb_blocks, :short]
     end
@@ -238,7 +238,7 @@ A final note to say that packers are inherited in some way. For instance one cou
       io.read(klass)
     end
   end
-  
+
   [42, MyHeader.new("Wow", 1)].pack(:with_class, :with_class).unpack(:with_class, :with_class) ===> [42, MyHeader.new("Wow", 1)]
 
 = License

@@ -9,7 +9,7 @@ module Packable
         base.alias_method_chain :write, :packing
         base.alias_method_chain :each, :packing
       end
-      
+
       # Returns the change in io.pos caused by the block.
       # Has nothing to do with packing, but quite helpful and so simple...
       def pos_change(&block)
@@ -33,11 +33,11 @@ module Packable
         r.stream = self
         r >> options
       end
-      
+
       # Returns (or yields) a modified IO object that will always pack/unpack when writing/reading.
       def packed
         packedio = clone
-        packedio.set_encoding("ascii-8bit") if packedio.respond_to? :set_encoding 
+        packedio.set_encoding("ascii-8bit") if packedio.respond_to? :set_encoding
         class << packedio
           def << (arg)
             arg = [arg, :default] unless arg.instance_of?(::Array)
@@ -61,7 +61,7 @@ module Packable
       def write_with_packing(*arg)
         (arg.length == 1) ? write_without_packing(*arg) : pack_and_write(*arg)
       end
-    
+
       def read_with_packing(*arg)
         return read_without_packing(*arg) if arg.length == 0 || arg.first.nil? || arg.first.is_a?(Numeric)
         values = Packable::Packers.to_class_option_list(*arg).map do |klass, options, original|
@@ -73,7 +73,7 @@ module Packable
         end
         return values.size > 1 ? values : values.first
       end
-      
+
       # returns a string of exactly n bytes, or else raises an EOFError
       def read_exactly(n)
         return "" if n.zero?
@@ -81,7 +81,7 @@ module Packable
         raise EOFError if s.nil? || s.length < n
         s
       end
-      
+
       def pack_and_write(*arg)
         original_pos = pos
         Packable::Packers.to_object_option_list(*arg).each do |obj, options|
@@ -94,7 +94,6 @@ module Packable
         pos - original_pos
       end
 
-    
     end
   end
 end

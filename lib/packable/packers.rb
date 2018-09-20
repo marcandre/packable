@@ -1,9 +1,9 @@
 module Packable
-  
+
   # Packers for any packable class.
   class Packers < Hash
     SPECIAL = [:default, :merge_all].freeze
-  
+
     # Usage:
     #   PackableClass.packers.set :shortcut, :option => value, ...
     #   PackableClass.packers { |p| p.set...; p.set... }
@@ -42,7 +42,7 @@ module Packable
     end
 
     @@packers_for_class = Hash.new{|h, klass| h[klass] = Packers.new(klass)}
-    
+
     # Returns the configuration for the given +klass+.
     def self.for(klass)
       @@packers_for_class[klass]
@@ -59,7 +59,7 @@ module Packable
       end
       r
     end
-    
+
     def self.to_object_option_list(*arg) #:nodoc:
       r=[]
       until arg.empty? do
@@ -85,7 +85,6 @@ module Packable
       raise "Couldn't find packing option #{key}"
     end
 
-    
   end
 
   # Use to capture the blocks given to read/write
@@ -103,5 +102,5 @@ module Packable
       options[:write_packed] = block.unbind
     end
   end
-    
+
 end

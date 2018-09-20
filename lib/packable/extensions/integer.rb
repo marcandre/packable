@@ -3,7 +3,7 @@ module Packable
     module Integer #:nodoc:
       NEEDS_REVERSAL = Hash.new{|h, endian| raise ArgumentError, "Endian #{endian} is not valid. It must be one of #{h.keys.join(', ')}"}.
         merge!(:little => true, :big => false, :network => false, :native => "*\x00\x00\x00".unpack('L').first == 42).freeze
-      
+
       def self.included(base)
         base.class_eval do
           include Packable

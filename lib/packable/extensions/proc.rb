@@ -6,7 +6,7 @@ module Packable
         Object.send(:define_method, :__temp_bound_method, &self)
         Object.instance_method(:__temp_bound_method)
       end
-      
+
       # Shortcut for <tt>unbind.bind(to)</tt>
       def bind(to)
         unbind.bind(to)
