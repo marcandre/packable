@@ -46,7 +46,7 @@ class TestingPack < Minitest::Test
     assert_equal "\002\001\000", 258.pack(:bytes => 3, :endian => :little)
     assert_equal 258, Integer.unpack("\002\001\000", :bytes => 3, :endian => :little)
     assert_equal (1<<24)-1, -1.pack(:bytes => 3).unpack(Integer, :bytes => 3, :signed => false)
-    assert_equal -1, -1.pack(:bytes => 3).unpack(Integer, :bytes => 3, :signed => true)
+    assert_equal(-1, -1.pack(:bytes => 3).unpack(Integer, :bytes => 3, :signed => true))
     assert_equal 42, 42.pack('L').unpack(Integer, :bytes => 4, :endian => :native)
     assert_raises(ArgumentError){ 42.pack(:endian => "Geronimo")}
   end
@@ -55,7 +55,7 @@ class TestingPack < Minitest::Test
     assert_equal 1.pack(:long), ((1 << 69) + 1).pack(:long)
     assert_equal "*" + ("\000" * 15), (42 << (8*15)).pack(:bytes => 16)
     assert_equal 42 << (8*15), (42 << (8*15)).pack(:bytes => 16).unpack(Integer, :bytes => 16)
-    assert_equal 42 << (8*15), (42 << (8*15)).pack(:bytes => 16).unpack(Bignum, :bytes => 16)
+    assert_equal 42 << (8*15), (42 << (8*15)).pack(:bytes => 16).unpack(Integer, :bytes => 16)
   end
 
   def test_float
@@ -69,7 +69,7 @@ class TestingPack < Minitest::Test
 
   def test_io
     io = StringIO.new("\000\000\000\006abcdE!")
-    n, s, c = io >> [Fixnum, {:signed=>false}] >> [String, {:bytes => 4}] >> :char
+    n, s, c = io >> [Integer, {:signed=>false}] >> [String, {:bytes => 4}] >> :char
     assert_equal 6, n
     assert_equal "abcd", s
     assert_equal 69, c
@@ -120,7 +120,12 @@ class TestingPack < Minitest::Test
       end
       should "be follow accessible everywhere" do
         assert_equal "StringHello", "Hello".pack(:generic_class_writer)
-        assert_equal "Fixnum\000\000\000\006", 6.pack(:generic_class_writer)
+        fixnum_class_name = if Gem::Version.new(RUBY_VERSION) < Gem::Version.new('2.5.0')
+                              'Fixnum'
+                            else
+                              'Integer'
+                            end
+        assert_equal "#{fixnum_class_name}\000\000\000\006", 6.pack(:generic_class_writer)
       end
     end
     context "for a specific class" do
