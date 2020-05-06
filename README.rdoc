@@ -54,6 +54,7 @@ That's it! Simply <tt>require 'packable'</tt> in your code to use it.
 == Compatibility
 
 Designed to work with ruby 1.8 & 1.9.
+If using with ruby 2.5 and higher be sure not to pass `Hash` and `Symbol` arguments to `write` unless you want it to be packed.
 
 = Documentation
 
