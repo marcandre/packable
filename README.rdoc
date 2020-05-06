@@ -24,6 +24,7 @@ The method +each+ also accepts packing options:
     StringIO.new("\000\001\000\002\000\003").each(:short).to_a  ===>  [1,2,3]
 === Custom classes
 It's easy to make you own classes (un)packable. All the previous goodies are thus available:
+
 		File.open("great_flick.flv") do |f|
 			head = f.read(FLV::Header)
 			f.each(FLV::Tag) do |tag|
