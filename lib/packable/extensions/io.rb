@@ -59,7 +59,7 @@ module Packable
       end
 
       def write_with_packing(*arg)
-        (arg.length <= 1) ? write_without_packing(*arg) : pack_and_write(*arg)
+        arg.length <= 1 || arg.none? { |a| a.is_a?(Hash) || a.is_a?(Symbol) } ? write_without_packing(*arg) : pack_and_write(*arg)
       end
 
       def read_with_packing(*arg)

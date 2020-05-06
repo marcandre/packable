@@ -54,6 +54,7 @@ That's it! Simply <tt>require 'packable'</tt> in your code to use it.
 == Compatibility
 
 Designed to work with ruby 1.8 & 1.9.
+If using with ruby 2.5 and higher be sure not to pass `Hash` and `Symbol` arguments to `write` unless you want it to be packed.
 
 = Documentation
 
@@ -97,7 +98,7 @@ When unpacking, it is necessary to specify the class in addition to any option, 
 
 It's easy to add shortcuts for easier (un)packing:
 
-	String.packers.set :flv_signature, :bytes => 3, :fill => "FLV"
+  String.packers.set :flv_signature, :bytes => 3, :fill => "FLV"
 
   "x".pack(:flv_signature)  ===>  "xFL"
 
