@@ -98,7 +98,7 @@ When unpacking, it is necessary to specify the class in addition to any option, 
 
 It's easy to add shortcuts for easier (un)packing:
 
-	String.packers.set :flv_signature, :bytes => 3, :fill => "FLV"
+  String.packers.set :flv_signature, :bytes => 3, :fill => "FLV"
 
   "x".pack(:flv_signature)  ===>  "xFL"
 
