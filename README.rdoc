@@ -1,5 +1,3 @@
-*Note*: SciRuby are taking over maintenance for this library: https://github.com/SciRuby/packable
-
 = Packable Library - Intro
 
 If you need to do read and write binary data, there is of course <tt>Array::pack</tt> and <tt>String::unpack</tt>.
