@@ -53,7 +53,6 @@ That's it! Simply <tt>require 'packable'</tt> in your code to use it.
 == Compatibility
 
 Designed to work with ruby 1.8 & 1.9.
-If using with ruby 2.5 and higher be sure not to pass `Hash` and `Symbol` arguments to `write` unless you want it to be packed.
 
 = Documentation
 
@@ -164,7 +163,7 @@ This is to insure compatibility with the usual behavior of IO objects:
 
 We "cheated" in the previous example; instead of writing <tt>io.packed.write(...)</tt> we used the shorter form.
 This works because we're passing more than one argument; for only one argument we must call <tt>io.packed.write(66)</tt>
-less the usual +write+ method is called. Ruby 2.5+ allows more than 1 argument, so monkeypatching was clearly a bad idea. We distinguish between packed or not by checking for Hashes/Symbol or classes including Packable for now.
+less the usual +write+ method is called.
 
 Since the standard library desn't define the <tt>>></tt> operator for IO objects, we are free to use either <tt>io.packed</tt> or <tt>io</tt> directly.
 Note that reading one value only will return that value directly, not an array containing that value:
