@@ -10,6 +10,25 @@ module Packable
         base.alias_method_chain :each, :packing
       end
 
+      # Methods supported by seekable streams.
+      SEEKABLE_API = %i[pos pos= seek rewind].freeze
+
+      # Check whether can seek without errors.
+      def seekable?
+        if !defined?(@seekable)
+          @seekable =
+            # The IO class throws an exception at runtime if we try to change
+            # position on a non-regular file.
+            if respond_to?(:stat)
+              stat.file?
+            else
+              # Duck-type the rest of this.
+              SEEKABLE_API.all? { |m| respond_to?(m) }
+            end
+        end
+        @seekable
+      end
+
       # Returns the change in io.pos caused by the block.
       # Has nothing to do with packing, but quite helpful and so simple...
       def pos_change(&block)
@@ -53,17 +72,17 @@ module Packable
       end
 
       def each_with_packing(*options, &block)
-        return each_without_packing(*options, &block) if options.empty? || (Integer === options.first) || (String === options.first) || tty?
+        return each_without_packing(*options, &block) if options.empty? || (Integer === options.first) || (String === options.first) || !seekable?
         return Enumerator.new(self, :each_with_packing, *options) unless block_given?
         yield read(*options) until eof?
       end
 
       def write_with_packing(*arg)
-        (arg.length <= 1 || tty?) ? write_without_packing(*arg) : pack_and_write(*arg)
+        (arg.length <= 1 || !seekable?) ? write_without_packing(*arg) : pack_and_write(*arg)
       end
 
       def read_with_packing(*arg)
-        return read_without_packing(*arg) if arg.empty? || arg.first.nil? || arg.first.is_a?(Numeric) || tty?
+        return read_without_packing(*arg) if arg.empty? || arg.first.nil? || arg.first.is_a?(Numeric) || !seekable?
         values = Packable::Packers.to_class_option_list(*arg).map do |klass, options, original|
           if options[:read_packed]
             options[:read_packed].call(self)
