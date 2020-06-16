@@ -1,5 +1,7 @@
 = Packable Library - Intro
 
+*NOTE:* This library monkeypatches core classes and wa designed for Ruby 1.8 & 1.9. A redesign using refinements would be much better. Minimal support is provided.
+
 If you need to do read and write binary data, there is of course <tt>Array::pack</tt> and <tt>String::unpack</tt>.
 The packable library makes (un)packing nicer, smarter and more powerful.
 In case you are wondering why on earth someone would want to do serious (un)packing when YAML & XML are built-in:
