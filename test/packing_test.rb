@@ -55,7 +55,6 @@ class TestingPack < Minitest::Test
     assert_equal 1.pack(:long), ((1 << 69) + 1).pack(:long)
     assert_equal "*" + ("\000" * 15), (42 << (8*15)).pack(:bytes => 16)
     assert_equal 42 << (8*15), (42 << (8*15)).pack(:bytes => 16).unpack(Integer, :bytes => 16)
-    assert_equal 42 << (8*15), (42 << (8*15)).pack(:bytes => 16).unpack(Bignum, :bytes => 16)
   end
 
   def test_float
@@ -69,7 +68,7 @@ class TestingPack < Minitest::Test
 
   def test_io
     io = StringIO.new("\000\000\000\006abcdE!")
-    n, s, c = io >> [Fixnum, {:signed=>false}] >> [String, {:bytes => 4}] >> :char
+    n, s, c = io >> [Integer, {:signed=>false}] >> [String, {:bytes => 4}] >> :char
     assert_equal 6, n
     assert_equal "abcd", s
     assert_equal 69, c
@@ -120,7 +119,7 @@ class TestingPack < Minitest::Test
       end
       should "be follow accessible everywhere" do
         assert_equal "StringHello", "Hello".pack(:generic_class_writer)
-        assert_equal "Fixnum\000\000\000\006", 6.pack(:generic_class_writer)
+        assert_match /Integer\x00\x00\x00\x06$/, 6.pack(:generic_class_writer)
       end
     end
     context "for a specific class" do
