@@ -5,7 +5,8 @@ module Packable
     module Array #:nodoc:
       def self.included(base)
         base.class_eval do
-          alias_method_chain :pack, :long_form
+          alias_method :pack_without_long_form, :pack
+          alias_method :pack, :pack_with_long_form
           include Packable
           extend ClassMethods
         end

@@ -5,9 +5,12 @@ module Packable
   module Extensions #:nodoc:
     module IO
       def self.included(base) #:nodoc:
-        base.alias_method_chain :read, :packing
-        base.alias_method_chain :write, :packing
-        base.alias_method_chain :each, :packing
+        base.__send__(:alias_method, :read_without_packing, :read)
+        base.__send__(:alias_method, :read, :read_with_packing)
+        base.__send__(:alias_method, :write_without_packing, :write)
+        base.__send__(:alias_method, :write, :write_with_packing)
+        base.__send__(:alias_method, :each_without_packing, :each)
+        base.__send__(:alias_method, :each, :each_with_packing)
       end
 
       # Methods supported by seekable streams.

@@ -8,7 +8,8 @@ module Packable
         base.class_eval do
           include Packable
           extend ClassMethods
-          alias_method_chain :unpack, :long_form
+          alias_method :unpack_without_long_form, :unpack
+          alias_method :unpack, :unpack_with_long_form
           packers.set :merge_all, :fill => " "
         end
       end
