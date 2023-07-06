@@ -18,7 +18,6 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
   gem.required_ruby_version = '>= 1.8.7'
-  gem.add_runtime_dependency 'backports'
   gem.add_development_dependency 'minitest'
   gem.add_development_dependency 'shoulda'
   gem.add_development_dependency 'mocha'
